@@ -1,0 +1,9 @@
+SECRET_KEY=django-insecure-)=c!og(w2wp7!tzw-fbr%myum@!x905-jn2=ry0na8_ykxi9hi
+DEBUG=True
+DATABASE_NAME=jobs_db
+DATABASE_USER=postgres
+DATABASE_PASSWORD=postgres
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+GDAL_LIBRARY_PATH=/usr/lib/libgdal.so
+GEOS_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/libgeos_c.so
