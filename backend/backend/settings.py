@@ -32,11 +32,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # third party apps
     'django.contrib.gis',
     'rest_framework',
     'corsheaders',
     'storages',
     'django_filters',
+
+    # local apps
+    'job.apps.JobConfig',
 ]
 
 MIDDLEWARE = [
