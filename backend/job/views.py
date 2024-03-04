@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
 from django.db.models import Avg, Max, Min, Count
+from rest_framework.pagination import PageNumberPagination
 from .filters import JobFilter
 from .serializers import JobSerializer
 from .models import Job
@@ -12,8 +13,22 @@ from .models import Job
 def job_list(request):
     jobs = Job.objects.all().order_by('id')
     filter_set = JobFilter(request.GET, queryset=jobs)
-    serializer = JobSerializer(filter_set.qs, many=True)
-    return Response(serializer.data)
+
+    count = filter_set.qs.count()
+
+    # pagination
+    res_per_page = 1
+
+    paginator = PageNumberPagination()
+    paginator.page_size = res_per_page
+    queryset = paginator.paginate_queryset(filter_set.qs, request)
+
+    serializer = JobSerializer(queryset, many=True)
+    return Response({
+        'count': count,
+        'resPerPage': res_per_page,
+        'jobs': serializer.data,
+    })
 
 
 @api_view(['GET'])
