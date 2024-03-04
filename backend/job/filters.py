@@ -3,6 +3,9 @@ from .models import Job
 
 
 class JobFilter(filters.FilterSet):
+    keyword = filters.CharFilter(field_name='title', lookup_expr='icontains')
+    location = filters.CharFilter(
+        field_name='address', lookup_expr='icontains')
     min_salary = filters.NumberFilter(
         field_name='salary' or 0, lookup_expr='gte')
     max_salary = filters.NumberFilter(
@@ -11,6 +14,6 @@ class JobFilter(filters.FilterSet):
     class Meta:
         model = Job
         fields = (
-            'title', 'education', 'job_type', 'experience', 'min_salary',
-            'max_salary'
+            'keyword', 'education', 'job_type', 'experience', 'min_salary',
+            'max_salary', 'location'
         )
