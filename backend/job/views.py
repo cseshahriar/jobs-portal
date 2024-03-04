@@ -2,15 +2,17 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
-from django.db.models import Avg, Max, Min, Sum, Count
+from django.db.models import Avg, Max, Min, Count
+from .filters import JobFilter
 from .serializers import JobSerializer
 from .models import Job
 
 
 @api_view(['GET'])
 def job_list(request):
-    jobs = Job.objects.all()
-    serializer = JobSerializer(jobs, many=True)
+    jobs = Job.objects.all().order_by('id')
+    filter_set = JobFilter(request.GET, queryset=jobs)
+    serializer = JobSerializer(filter_set.qs, many=True)
     return Response(serializer.data)
 
 
