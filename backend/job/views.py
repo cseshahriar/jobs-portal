@@ -2,8 +2,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
+from django.db.models import Avg, Max, Min, Sum, Count
 from .serializers import JobSerializer
 from .models import Job
+
 
 @api_view(['GET'])
 def job_list(request):
@@ -44,3 +46,23 @@ def job_delete(request, pk):
         'message': 'Job deleted successfully'},
         status=status.HTTP_204_NO_CONTENT
     )
+
+
+@api_view(['GET'])
+def job_stats(request, topic):
+    args = {'title__icontains': topic}
+    jobs = Job.objects.filter(**args)
+    if len(jobs) == 0:
+        return Response({
+            'message': f'No stats found for the given {topic}'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+
+    stats = jobs.aggregate(
+        total_jobs=Count('title'),
+        avg_position=Avg('positions'),
+        avg_salary=Avg('salary'),
+        min_salary=Min('salary'),
+        max_salary=Max('salary'),
+    )
+    return Response(stats)
