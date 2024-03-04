@@ -1,3 +1,19 @@
-from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from django.shortcuts import get_object_or_404
+from .serializers import JobSerializer
+from .models import Job
 
-# Create your views here.
+
+@api_view(['GET'])
+def job_list(request):
+    jobs = Job.objects.all()
+    serializer = JobSerializer(jobs, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def job_detail(request, pk):
+    job = get_object_or_404(Job, id=pk)
+    serializer = JobSerializer(job, many=False)
+    return Response(serializer.data)
