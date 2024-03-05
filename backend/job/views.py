@@ -5,9 +5,11 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Avg, Max, Min, Count
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
+from django.utils import timezone
+
 from .filters import JobFilter
-from .serializers import JobSerializer
-from .models import Job
+from .serializers import JobSerializer, CandidateAppliedSerializer
+from .models import Job, CandidateApplied
 
 
 @api_view(['GET'])
@@ -99,3 +101,35 @@ def job_stats(request, topic):
         max_salary=Max('salary'),
     )
     return Response(stats)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def apply_to_job(request, pk):
+    user = request.user
+    job = get_object_or_404(Job, id=pk)
+    if user.userprofile.resume == '':
+        return Response(
+            {'message': 'Please upload your resume first.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    if job.last_date < timezone.now():
+        return Response(
+            {'message': 'Job application date has been expired.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    if job.candidate_applies.filter(user=user).exists():
+        return Response(
+            {'message': 'You have already applied to this job.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    job_candidate = CandidateApplied.objects.create(
+        job=job, user=user, resume=user.userprofile.resume
+    )
+    return Response(
+        {'applied': True, 'job_id': job_candidate.id},
+        status=status.HTTP_201_CREATED
+    )
