@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
+from .models import UserProfile
 from .serializers import SignupSerializer, UserSerializer
 
 
@@ -60,3 +61,22 @@ def update_user(request):
     user.save()
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_resume(request):
+    user = request.user
+    resume = request.FILES['resume']
+    if resume == '':
+        return Response({'error': 'Please upload your resume.'})
+
+    serializer = UserSerializer(user, many=False)
+    if user.userprofile is None:
+        userprofile = UserProfile.objects.create(user=user)
+        user.userprofile.resume = resume
+        user.userprofile.save()
+    else:
+        user.userprofile.resume = resume
+        user.userprofile.save()
+    return Response(serializer.data)

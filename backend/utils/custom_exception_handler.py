@@ -21,4 +21,10 @@ def custom_exception_handler(exc, context):
             "Your authentication token is expired. Please login again."
         }
 
+    # if exception_class == 'RelatedObjectDoesNotExist':
+    #     response.data = {
+    #         "error":
+    #         "Related object does not exist"
+    #     }
+
     return response

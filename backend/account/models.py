@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 
 class UserProfile(models.Model):
@@ -9,3 +11,10 @@ class UserProfile(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user}"
+
+
+@receiver(post_save, sender=User)
+def save_profile(sender, instance, created, **kwargs):
+    if created:
+        profile = UserProfile(user=instance)
+        profile.save()
