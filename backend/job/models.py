@@ -85,3 +85,12 @@ class Job(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class CandidateApplied(models.Model):
+    job = models.ForeignKey(
+        Job, related_name='candidate_applies', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, related_name='candidate_applies', on_delete=models.CASCADE)
+    resume = models.FileField(upload_to='candidate/resumes/')
+    created_at = models.DateTimeField(auto_now_add=True)

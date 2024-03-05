@@ -74,7 +74,10 @@ def update_resume(request):
 
     is_valid_file = validate_file_extension(resume.name)
     if not is_valid_file:
-        return Response({'error': 'Please upload only pdf file.'})
+        return Response(
+            {'error': 'Please upload only pdf file.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
     serializer = UserSerializer(user, many=False)
     if user.userprofile is None:
