@@ -9,3 +9,6 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view()),
     path('api/token/verify/', TokenVerifyView.as_view()),
 ]
+
+# error handler
+handler500 = 'utils.error_views.handler500'
