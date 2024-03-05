@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from .models import UserProfile
 from .serializers import SignupSerializer, UserSerializer
+from .validators import validate_file_extension
 
 
 @api_view(['POST'])
@@ -71,9 +72,13 @@ def update_resume(request):
     if resume == '':
         return Response({'error': 'Please upload your resume.'})
 
+    is_valid_file = validate_file_extension(resume.name)
+    if not is_valid_file:
+        return Response({'error': 'Please upload only pdf file.'})
+
     serializer = UserSerializer(user, many=False)
     if user.userprofile is None:
-        userprofile = UserProfile.objects.create(user=user)
+        UserProfile.objects.create(user=user)
         user.userprofile.resume = resume
         user.userprofile.save()
     else:
