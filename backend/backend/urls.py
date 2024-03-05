@@ -12,3 +12,4 @@ urlpatterns = [
 
 # error handler
 handler500 = 'utils.error_views.handler500'
+handler404 = 'utils.error_views.handler404'

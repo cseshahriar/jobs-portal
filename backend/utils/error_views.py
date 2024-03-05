@@ -7,3 +7,11 @@ def handler500(request):
     response = JsonResponse(data={'error': message})
     response.status_code = 500
     return response
+
+
+def handler404(request, exception):
+    """ return json response for 404"""
+    message = ('Resource not found')
+    response = JsonResponse(data={'error': message})
+    response.status_code = 404
+    return response
