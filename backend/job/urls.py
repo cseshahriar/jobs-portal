@@ -13,4 +13,10 @@ urlpatterns = [
         'me/applied/', views.get_current_user_applied_jobs,
         name='current_user_applied_jobs'
     ),
+    path(
+        'me/', views.get_current_user_jobs,
+        name='current_user_jobs'
+    ),
+    path('<str:pk>/check/', views.is_applied, name='is_applied'),
+    path('<str:pk>/check/', views.get_current_user_jobs, name='is_applied'),
 ]
