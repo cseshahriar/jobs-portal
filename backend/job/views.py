@@ -161,3 +161,18 @@ def get_current_user_jobs(request):
     jobs = Job.objects.filter(**args)
     serializer = JobSerializer(jobs, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_candidates_applied(request, pk):
+    user = request.user
+    job = get_object_or_404(Job, id=pk)
+    if job.user != user:
+        return Response(
+            {'message': 'You can not access this job.'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+    candidates = job.candidate_applies.all()
+    serializer = CandidateAppliedSerializer(candidates, many=True)
+    return Response(serializer.data)
