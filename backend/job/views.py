@@ -133,3 +133,12 @@ def apply_to_job(request, pk):
         {'applied': True, 'job_id': job_candidate.id},
         status=status.HTTP_201_CREATED
     )
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_current_user_applied_jobs(request):
+    args = {'user_id': request.user.id}
+    applied_jobs = CandidateApplied.objects.filter(**args)
+    serializer = CandidateAppliedSerializer(applied_jobs, many=True)
+    return Response(serializer.data)
