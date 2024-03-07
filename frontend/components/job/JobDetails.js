@@ -83,12 +83,7 @@ const JobDetails = ({job, candidates}) => {
 
               <div className="job-location">
                 <h4 className="mt-5 mb-4">Job Location</h4>
-                <iframe
-                    id="map"
-                    frameborder="0"
-                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d${job.latitude}!${job.longitude}!3dYOUR_LATITUDE&z=15`}
-                    allowfullscreen>
-                </iframe>
+                <iframe  id="map" frameborder="0" src={`https://maps.google.com/maps?output=embed&iwloc&z=12&t=p&q=${job.address}`}></iframe>
               </div>
             </div>
           </div>

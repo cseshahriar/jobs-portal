@@ -672,3 +672,12 @@ a:hover {
   height: 400px;  /* Adjust height as needed */
   width: 100%;    /* Adjust width as needed */
 }
+.hiddenDiv {
+  display:none;
+  height:500px;
+  width:500px;
+}
+iframe {
+  height:inherit;
+  width:inherit;
+}
