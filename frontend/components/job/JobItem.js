@@ -3,7 +3,7 @@ import moment from 'moment'
 
 const JobItem = ({ job }) => {
   return (
-    <a href={`/job/${job.id}`}>
+    <a href={`/jobs/${job.id}`}>
       <div className="job-listing">
 
         <div className="job-listing-details">
