@@ -12,6 +12,8 @@ const Home = ({ data }) => {
   
   // pagination 
   let { page=1, keyword } = router.query
+  page = Number(page);
+  
   let queryParams;
   if(typeof window !== 'undefined') {
     queryParams = new URLSearchParams(window.location.search);

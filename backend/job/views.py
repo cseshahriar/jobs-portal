@@ -20,7 +20,7 @@ def job_list(request):
     count = filter_set.qs.count()
 
     # pagination
-    res_per_page = 1  # Todo: make it 10
+    res_per_page = 3  # Todo: make it 10
 
     paginator = PageNumberPagination()
     paginator.page_size = res_per_page

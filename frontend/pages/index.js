@@ -13,9 +13,21 @@ export default function Index({ data }) {
 export async function getServerSideProps({ query }) {
   const keyword = query.keyword || ''
   const location = query.location || ''
-  const page = query.page || ""
+  const page = query.page || 1
 
-  const queryString = `keyword=${keyword}&location=${location}&page=${page}`
+  const job_type = query.job_type || ""
+  const education = query.education || ""
+  const experience = query.experience || ""
+
+  let min_salary = ""
+  let max_salary = ""
+  if(query.salary) {
+    const [min, max] = query.salary.split("-")
+    min_salary = min
+    max_salary = max
+  }
+
+  const queryString = `keyword=${keyword}&location=${location}&page=${page}&job_type=${job_type}&education=${education}&experience=${experience}&min_salary=${min_salary}&max_salary=${max_salary}`
   const response = await axios.get(`${process.env.API_URL}/api/jobs?${queryString}`)
   const data = response.data
   return {
