@@ -3,12 +3,32 @@ import Filters from "./layout/Filters";
 import Link from "next/link";
 import JobItem from "./job/JobItem"
 import { useRouter } from "next/router"
+import Pagination from 'react-js-pagination'
 
 const Home = ({ data }) => {
-  const {jobs, count, resPerPage } = data;
   const router = useRouter()
-  let { keyword } = router.query
   
+  const {jobs, count, resPerPage } = data;
+  
+  // pagination 
+  let { page=1, keyword } = router.query
+  let queryParams;
+  if(typeof window !== 'undefined') {
+    queryParams = new URLSearchParams(window.location.search);
+  }
+
+  const handlePageClick = (currentPage) => {
+    if(queryParams.has('page')) {
+      queryParams.set('page', currentPage)
+    } else {
+      queryParams.append('page', currentPage)
+    }
+
+    router.push({
+      search: queryParams.toString()
+    })
+  }
+
   return (
     <>
       <div className="container container-fluid">
@@ -35,6 +55,25 @@ const Home = ({ data }) => {
             </div>
 
             {jobs && jobs.map((job) => <JobItem key={job.id} job={job} />)}
+              
+            {
+              resPerPage < count && (
+                <div className="d-flex justify-content-center mt-5">
+                <Pagination 
+                  activePage={page}
+                  itemsCountPerPage={resPerPage}
+                  totalItemsCount={count}
+                  onChange={handlePageClick}
+                  nextPageText={"Next"}
+                  prevPageText={"Prev"}
+                  firstPageText={"First"}
+                  lastPageText={"Last"}
+                  itemClass="page-item"
+                  linkClass="page-link"
+                />
+                </div>
+              )
+            }
 
           </div>
         </div>
