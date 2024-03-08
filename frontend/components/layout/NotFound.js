@@ -5,7 +5,7 @@ import Layout
  from "./Layout";
 const NotFound = () => {
   return (
-    <Layout title="Page not found.">
+    <Layout title="Page not found">
     <div className="page-not-found-wrapper">
       <Image src="/images/404.svg" height="550" width="550" alt="404_not_found" />
       <h5>

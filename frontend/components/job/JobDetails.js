@@ -77,6 +77,11 @@ const JobDetails = ({job, candidates}) => {
                       <td>:</td>
                       <td>{ job.company }</td>
                     </tr>
+                    <tr>
+                      <td>Address</td>
+                      <td>:</td>
+                      <td>{ job.address }</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

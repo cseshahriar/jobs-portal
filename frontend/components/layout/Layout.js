@@ -5,11 +5,11 @@ import Header from './Header'
 import Footer from './Footer'
 
 
-const Layout = ({ children, title = 'Jobee - Find you job now'}) => {
+const Layout = ({ children, title = 'Find you job now'}) => {
   return (
     <div>
         <Head>
-            <title>{title}</title>
+            <title>{title} | Job Portal</title>
         </Head>
 
         <Script strategy="beforeInteractive" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></Script>
