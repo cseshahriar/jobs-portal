@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import AuthContext  from "../../context/AuthContext";
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const router = useRouter()
@@ -11,7 +12,7 @@ const Login = () => {
 
   useEffect(() => {
     if(error) {
-      console.log(error)
+      toast.error(error);
     }
     
     // if authenticated, redirect to dashboard
@@ -65,10 +66,6 @@ const Login = () => {
                     title="Your email is invalid"
                   />
 
-                </div>
-
-                <div className="from-group">
-                  {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
                 </div>
               </div>
 

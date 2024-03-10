@@ -4,6 +4,8 @@ import Script from 'next/script'
 import Header from './Header'
 import Footer from './Footer'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Layout = ({ children, title = 'Find you job now'}) => {
   return (
@@ -22,6 +24,7 @@ const Layout = ({ children, title = 'Find you job now'}) => {
         {children}
 
         <Footer />
+        <ToastContainer position='bottom-right' />
     </div>
   )
 }
