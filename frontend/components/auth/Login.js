@@ -7,7 +7,7 @@ const Login = () => {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const {  isAuthenticated, loading, error } = useContext(AuthContext)
+  const { isAuthenticated, loading, error, login } = useContext(AuthContext)
 
   useEffect(() => {
     if(error) {
@@ -22,7 +22,7 @@ const Login = () => {
   
   const submitHandle = (e) => {
     e.preventDefault()
-    console.log(email, password)
+    login({username: email, password: password});
   }
 
   return (
@@ -37,9 +37,11 @@ const Login = () => {
           <div className="rightContentWrapper">
             <div className="headerWrapper">
               <h2> LOGIN</h2>
+              <br/>
             </div>
             <form className="form" onSubmit={submitHandle}>
               <div className="inputWrapper">
+               
                 <div className="inputBox">
                   <i aria-hidden className="fas fa-envelope"></i>
                   <input 
@@ -51,6 +53,7 @@ const Login = () => {
                     pattern="\S+@\S+\.\S+"
                   />
                 </div>
+
                 <div className="inputBox">
                   <i aria-hidden className="fas fa-key"></i>
                   <input
@@ -61,8 +64,14 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     title="Your email is invalid"
                   />
+
+                </div>
+
+                <div className="from-group">
+                  {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
                 </div>
               </div>
+
               <div className="loginButtonWrapper">
                 <button type="submit" className="loginButton">
                   { loading ? 'Authenticating...' : 'Login'}
