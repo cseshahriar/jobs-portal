@@ -46,12 +46,11 @@ const Login = () => {
                 <div className="inputBox">
                   <i aria-hidden className="fas fa-envelope"></i>
                   <input 
-                    type="email" 
-                    placeholder="Enter Your Email" 
+                    type="text" 
+                    placeholder="Enter Your Username" 
                     required 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    pattern="\S+@\S+\.\S+"
                   />
                 </div>
 
