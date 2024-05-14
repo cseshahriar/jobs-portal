@@ -4,7 +4,6 @@ import cookie from "cookie";
 export default async (req, res) => {
   if (req.method === "POST") {
     const { username, password } = req.body;
-    console.log('-------------------login api called', username, password)
     try {
       const response = await axios.post(
         `${process.env.API_URL}/api/token/`,

@@ -33,12 +33,12 @@ export const AuthProvider = ({ children }) => {
             )
             if (res.data.success) {
                 loadUser();
-                setIsAuthenticated(true)
-                setLoading(false)
-                router.push('/')
+                setIsAuthenticated(true);
+                setLoading(false);
+                console.log('is auth ', isAuthenticated)
+                router.push('/');
             }
         } catch (error) {
-            console.log('-------------------------auth context login catch ', error)
             setLoading(false)
             setError(
                 error.response && error.response.data.detail 
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         try {
             setLoading(true)
             const res = await axios.get('/api/auth/user')
-            if (res.data.success) {
+            if (res.data.user) {
                 setIsAuthenticated(true)
                 setLoading(false)
                 setUser(res.data.user)

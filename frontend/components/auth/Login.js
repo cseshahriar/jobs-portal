@@ -17,7 +17,8 @@ const Login = () => {
     
     // if authenticated, redirect to dashboard
     if(isAuthenticated && !loading) {
-      router.push('/dashboard')
+      toast.success("Login Success");
+      router.push('/')
     }
   }, [isAuthenticated, loading, error])
   
@@ -47,7 +48,7 @@ const Login = () => {
                   <i aria-hidden className="fas fa-envelope"></i>
                   <input 
                     type="text" 
-                    placeholder="Enter Your Username" 
+                    placeholder="Enter Your Email" 
                     required 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
