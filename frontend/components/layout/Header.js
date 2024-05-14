@@ -6,7 +6,11 @@ import AuthContext from '../../context/AuthContext';
 
 
 const Header = () => {
-  const {loading, user} = useContext(AuthContext);
+  const {loading, user, logout} = useContext(AuthContext);
+
+  const logoutHandler= () => {
+    logout();
+  }
 
   return (
     <div className="navWrapper">
@@ -28,7 +32,7 @@ const Header = () => {
           </Link>
 
           { user ? (
-            <div className="btn dropdown ml-3">
+            <div className="dropdown ml-3">
               <a 
                 className="btn dropdown-toggle mr-4"
                 id="dropDownMenuButton"
@@ -51,7 +55,7 @@ const Header = () => {
                 <Link href="/upload/resume" className="dropdown-item">
                     Upload Resume
                 </Link>
-                <Link href="/logout" className="dropdown-item text-danger">
+                <Link href="" className="dropdown-item text-danger" onClick={logoutHandler}>
                     Logout
                 </Link>
               </div>
