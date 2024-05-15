@@ -45,8 +45,33 @@ export const AuthProvider = ({ children }) => {
                 || error.response.data.error
             )
         }
-    }
+    };
 
+    // register user
+    const register = async ({firstName, lastName, email, password}) => {
+        try {
+            setLoading(true)
+            const res = await axios.post(
+                `${process.env.API_URL}/api/register/`, 
+                { first_name: firstName, last_name:lastName, email, password},
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            )
+            if (res.data.success) {
+                setLoading(false);
+                router.push('/login');
+            }
+        } catch (error) {
+            setLoading(false)
+            setError(
+                error.response && error.response.data.detail 
+                || error.response.data.error
+            )
+        }
+    }
 
     // get user
     const loadUser = async () => {
@@ -88,10 +113,23 @@ export const AuthProvider = ({ children }) => {
             )
         }
     }
+    // clear error 
+    const clearErrors = () => {
+        setError(null);
+    }
 
     return (
         <AuthContext.Provider 
-            value={{ user, isAuthenticated, loading, error, login, logout }}
+            value={{ 
+                user, 
+                isAuthenticated, 
+                loading, 
+                error, 
+                login, 
+                register,
+                logout,
+                clearErrors 
+            }}
         >
             {children}
         </AuthContext.Provider>

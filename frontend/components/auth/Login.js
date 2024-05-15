@@ -8,11 +8,12 @@ const Login = () => {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const { isAuthenticated, loading, error, login } = useContext(AuthContext)
+  const { isAuthenticated, loading, error, login, clearErrors } = useContext(AuthContext)
 
   useEffect(() => {
     if(error) {
       toast.error(error);
+      clearErrors();
     }
     
     // if authenticated, redirect to dashboard

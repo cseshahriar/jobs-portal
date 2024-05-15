@@ -7,7 +7,7 @@ export default async (req, res) => {
         const access = cookies.access || false;
 
         if (!access) {
-            return res.status(401).json({ error: "Login First to load user"});
+            return res.status(401).json({ message: "Login First to load user"});
         }
 
         try {

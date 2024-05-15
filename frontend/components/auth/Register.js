@@ -13,8 +13,7 @@ const Register = () => {
 
   const router = useRouter();
 
-  const { loading, error, isAuthenticated, register, clearErrors } =
-    useContext(AuthContext);
+  const { loading, error, isAuthenticated, register, clearErrors } = useContext(AuthContext);
 
   useEffect(() => {
     if (error) {

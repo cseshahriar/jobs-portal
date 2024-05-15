@@ -63,11 +63,13 @@ const Header = () => {
             </div>
           ) : (
               !loading && (
-                <Link href="/login">
-                  <button className="loginButtonHeader">
-                    <span>Login</span>
-                  </button>
-                </Link>
+                <div>
+                  <Link href="/login">
+                    <button className="loginButtonHeader">
+                      <span>Login</span>
+                    </button>
+                  </Link>
+                </div>
               )
           )}
         </div>
