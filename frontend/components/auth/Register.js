@@ -13,12 +13,16 @@ const Register = () => {
 
   const router = useRouter();
 
-  const { loading, error, isAuthenticated, register, clearErrors } = useContext(AuthContext);
+  const { loading, error, isAuthenticated, register, clearErrors, isSuccess } = useContext(AuthContext);
 
   useEffect(() => {
     if (error) {
       toast.error(error);
       clearErrors();
+    }
+
+    if(isSuccess) {
+      toast.success("Registration successful!");
     }
 
     if (isAuthenticated && !loading) {
@@ -28,7 +32,7 @@ const Register = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    register({ firstName, lastName, email, password });
+    const status = register({ firstName, lastName, email, password });
   };
 
   return (

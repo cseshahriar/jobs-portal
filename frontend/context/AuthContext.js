@@ -6,6 +6,7 @@ const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
     const [user, setUser] = useState(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [error, setError] = useState(null)
@@ -32,6 +33,7 @@ export const AuthProvider = ({ children }) => {
                 }
             )
             if (res.data.success) {
+                setIsSuccess(true);
                 loadUser();
                 setIsAuthenticated(true);
                 setLoading(false);
@@ -39,6 +41,7 @@ export const AuthProvider = ({ children }) => {
                 router.push('/');
             }
         } catch (error) {
+            setIsSuccess(false);
             setLoading(false)
             setError(
                 error.response && error.response.data.detail 
@@ -61,10 +64,12 @@ export const AuthProvider = ({ children }) => {
                 }
             )
             if (res.data.success) {
+                setIsSuccess(true);
                 setLoading(false);
                 router.push('/login');
             }
         } catch (error) {
+            setIsSuccess(false);
             setLoading(false)
             setError(
                 error.response && error.response.data.detail 
@@ -79,12 +84,14 @@ export const AuthProvider = ({ children }) => {
             setLoading(true)
             const res = await axios.get('/api/auth/user')
             if (res.data.user) {
+                setIsSuccess(true);
                 setIsAuthenticated(true)
                 setLoading(false)
                 setUser(res.data.user)
                 router.push('/')
             }
         } catch (error) {
+            setIsSuccess(false);
             setLoading(false)
             setIsAuthenticated(false)
             setUser(null)
@@ -100,10 +107,12 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await axios.post('/api/auth/logout')
             if (res.data.success) {
+                setIsSuccess(true);
                 setIsAuthenticated(false);
                 setUser(null);
             }
         } catch (error) {
+            setIsSuccess(false);
             setLoading(false)
             setIsAuthenticated(false)
             setUser(null)
@@ -128,7 +137,8 @@ export const AuthProvider = ({ children }) => {
                 login, 
                 register,
                 logout,
-                clearErrors 
+                clearErrors,
+                isSuccess
             }}
         >
             {children}
