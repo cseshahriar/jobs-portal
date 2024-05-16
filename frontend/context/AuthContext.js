@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [error, setError] = useState(null)
+    const [updated, setUpdate] = useState(null)
     
     const router = useRouter()
     
@@ -102,6 +103,35 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    // update user
+    const updateProfile = async ({firstName, lastName, email, password}, access_token) => {
+        try {
+            setLoading(true)
+            const res = await axios.put(
+                `${process.env.API_URL}/api/me/update/`, 
+                { first_name: firstName, last_name:lastName, email, password},
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${access_token}`
+                    }
+                }
+            )
+            if (res.data) {
+                setUpdate(true);
+                setLoading(false);
+                setUser(res.data); // refresh data
+            }
+        } catch (error) {
+            setUpdate(false);
+            setLoading(false)
+            setError(
+                error.response && error.response.data.detail 
+                || error.response.data.error
+            )
+        }
+    }
+
     // logout user
     const logout = async () => {
         try {
@@ -130,15 +160,18 @@ export const AuthProvider = ({ children }) => {
     return (
         <AuthContext.Provider 
             value={{ 
-                user, 
-                isAuthenticated, 
                 loading, 
+                user, 
                 error, 
+                isAuthenticated, 
+                updated,
+                setUpdate,
                 login, 
                 register,
+                updateProfile,
                 logout,
+                isSuccess,
                 clearErrors,
-                isSuccess
             }}
         >
             {children}

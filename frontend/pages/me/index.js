@@ -4,10 +4,10 @@ import UpdateProfile from '../../components/user/UpdateProfile'
 import { isAuthenticatedUser } from '../../utils/isAuthenticated'
 import { redirect } from 'next/dist/server/api-utils'
 
-export default function LoginPage() {
+export default function UpdateProfilePage({access_token}) {
   return (
     <Layout title='Update user profile'>
-      <UpdateProfile />
+      <UpdateProfile access_token={access_token} />
     </Layout>
   )
 }
