@@ -49,7 +49,7 @@ const Header = () => {
                 <Link href="/me/applied" className="dropdown-item">
                     Jobs applied
                 </Link>
-                <Link href="/me/profile" className="dropdown-item">
+                <Link href="/me" className="dropdown-item">
                     Profile
                 </Link>
                 <Link href="/upload/resume" className="dropdown-item">

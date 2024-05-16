@@ -5,7 +5,7 @@ import Image from "next/image";
 import AuthContext from "../../context/AuthContext";
 import { toast } from "react-toastify";
 
-const Register = () => {
+const UpdateProfile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -13,26 +13,24 @@ const Register = () => {
 
   const router = useRouter();
 
-  const { loading, error, isAuthenticated, register, clearErrors, isSuccess } = useContext(AuthContext);
+  const { loading, error, user, clearErrors } = useContext(AuthContext);
 
   useEffect(() => {
+    if(user) {
+        setFirstName(user.first_name);
+        setLastName(user.last_name);
+        setEmail(user.password);
+    }
+
     if (error) {
       toast.error(error);
       clearErrors();
     }
-
-    if(isSuccess) {
-      toast.success("Registration successful!");
-    }
-
-    if (isAuthenticated && !loading) {
-      router.push("/");
-    }
-  }, [isAuthenticated, error, loading, isSuccess]);
+  }, [error, loading]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    register({ firstName, lastName, email, password });
+    // register({ firstName, lastName, email, password });
   };
 
   return (
@@ -40,13 +38,13 @@ const Register = () => {
       <div className="modalWrapper">
         <div className="left">
           <div style={{ width: "100%", height: "100%", position: "relative" }}>
-            <Image src="/images/signup.svg" alt="register" layout="fill" />
+            <Image src="/images/profile.svg" alt="register" layout="fill" />
           </div>
         </div>
         <div className="right">
           <div className="rightContentWrapper">
             <div className="headerWrapper">
-              <h2> SIGN UP</h2>
+              <h2> Profile</h2>
             </div>
             <form className="form" onSubmit={submitHandler}>
               <div className="inputWrapper">
@@ -98,7 +96,7 @@ const Register = () => {
               </div>
               <div className="registerButtonWrapper">
                 <button type="submit" className="registerButton">
-                  {loading ? "Loading..." : "Register"}
+                  {loading ? "Updating..." : "Update"}
                 </button>
               </div>
             </form>
@@ -109,4 +107,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default UpdateProfile;

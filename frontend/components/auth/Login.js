@@ -8,7 +8,7 @@ const Login = () => {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const { isAuthenticated, loading, error, login, clearErrors } = useContext(AuthContext)
+  const { isAuthenticated, loading, error, login, clearErrors, isSuccess } = useContext(AuthContext)
 
   useEffect(() => {
     if(error) {
@@ -21,7 +21,7 @@ const Login = () => {
       toast.success("Login Success");
       router.push('/')
     }
-  }, [isAuthenticated, loading, error])
+  }, [isAuthenticated, loading, error, isSuccess])
   
   const submitHandle = (e) => {
     e.preventDefault()
