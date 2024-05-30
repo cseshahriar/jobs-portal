@@ -1,7 +1,7 @@
 # jobs-portal
 django and nextjs pet project
 
-![DEMO](../main/backend/static/images/home.png)
+![DEMO](https://github.com/cseshahriar/jobs-portal/blob/main/backend/images/home.png)
 
 
 # Features
