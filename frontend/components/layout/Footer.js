@@ -5,14 +5,14 @@ const Footer = () => {
   return (
     <footer className="py-1">
       <p className="text-center mt-1">
-        Jobbee - 2023-2024, All Rights Reserved
+        Job Portal - 2023-2024, All Rights Reserved
         <Link
           className="ml-4"
           rel="noreferrer"
           target="_blank"
-          href="#"
+          href="https://github.com/cseshahriar"
         >
-          People illustrations by Storyset
+          @cseshahriar
         </Link>
       </p>
     </footer>

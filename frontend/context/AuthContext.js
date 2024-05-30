@@ -5,12 +5,13 @@ import axios from 'axios'
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-    const [loading, setLoading] = useState(false)
-    const [isSuccess, setIsSuccess] = useState(false)
-    const [user, setUser] = useState(null)
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const [error, setError] = useState(null)
-    const [updated, setUpdate] = useState(null)
+    const [loading, setLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [user, setUser] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [error, setError] = useState(null);
+    const [updated, setUpdate] = useState(null);
+    const [uploaded, setUploaded] = useState(null);
     
     const router = useRouter()
     
@@ -132,6 +133,36 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    // upload resume
+    const uploadResume = async (formData, access_token) => {
+        try {
+            setLoading(true)
+            const res = await axios.put(
+                `${process.env.API_URL}/api/upload/resume/`, 
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${access_token}`
+                    }
+                }
+            )
+            if (res.data) {
+                setLoading(false);
+                setUploaded(true);
+            }
+        } catch (error) {
+            console.log('ee -------------', error);
+            setLoading(false)
+            setUploaded(false);
+            setError(
+                error.response && error.response.data.detail 
+                || error.response.data.error || error.response.message
+            )
+        }
+    }
+    
+
     // logout user
     const logout = async () => {
         try {
@@ -172,6 +203,9 @@ export const AuthProvider = ({ children }) => {
                 logout,
                 isSuccess,
                 clearErrors,
+                uploadResume,
+                uploaded,
+                setUploaded
             }}
         >
             {children}

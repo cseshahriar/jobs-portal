@@ -39,10 +39,12 @@ INSTALLED_APPS = [
     'corsheaders',
     'storages',
     'django_filters',
+    'django_extensions',
 
     # local apps
     'job.apps.JobConfig',
     'account.apps.AccountConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -159,3 +161,9 @@ CORS_ALLOWED_ORIGINS = [
 
 GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
+
+
+GRAPH_MODELS ={
+    'all_applications': True,
+    'graph_models': True,
+}

@@ -21,7 +21,7 @@ const Header = () => {
               <Image width="30" height="30" src="/images/logo.png" alt="" />
             </div>
             <span className="logo1">Job</span>
-            <span className="logo2">bee</span>
+            <span className="logo2">Portal</span>
           </div>
         </Link>
         <div className="btnsWrapper">
@@ -43,14 +43,14 @@ const Header = () => {
                 <span>Hi, {  user.first_name ? user.first_name :  user.email }</span> {" "}
               </a>
               <div className="dropdown-menu" arial-labelledby="dropDownMenuButton">
+                <Link href="/me" className="dropdown-item">
+                    Profile
+                </Link>
                 <Link href="/employer/jobs" className="dropdown-item">
                     My Jobs
                 </Link>
                 <Link href="/me/applied" className="dropdown-item">
                     Jobs applied
-                </Link>
-                <Link href="/me" className="dropdown-item">
-                    Profile
                 </Link>
                 <Link href="/upload/resume" className="dropdown-item">
                     Upload Resume
