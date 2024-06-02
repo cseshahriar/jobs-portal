@@ -68,9 +68,19 @@ def update_user(request):
 @permission_classes([IsAuthenticated])
 def update_resume(request):
     user = request.user
+    if 'resume' not in request.FILES:
+        return Response(
+            {'error': 'Please upload your resume.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
     resume = request.FILES['resume']
-    if resume == '':
-        return Response({'error': 'Please upload your resume.'})
+
+    if not resume:
+        return Response(
+            {'error': 'Please upload your resume.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
     is_valid_file = validate_file_extension(resume.name)
     if not is_valid_file:
@@ -79,12 +89,18 @@ def update_resume(request):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-    serializer = UserSerializer(user, many=False)
-    if user.userprofile is None:
-        UserProfile.objects.create(user=user)
-        user.userprofile.resume = resume
-        user.userprofile.save()
-    else:
-        user.userprofile.resume = resume
-        user.userprofile.save()
-    return Response(serializer.data)
+    try:
+        user_profile, created = UserProfile.objects.get_or_create(user=user)
+        user_profile.resume = resume
+        user_profile.save()
+
+        serializer = UserSerializer(user, many=False)
+        return Response(serializer.data)
+
+    except Exception as e:
+        # Log the exception details for debugging
+        print(f"Error updating resume: {str(e)}")
+        return Response(
+            {'error': 'An error occurred while updating the resume.'},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )

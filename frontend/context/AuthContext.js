@@ -90,7 +90,7 @@ export const AuthProvider = ({ children }) => {
                 setIsAuthenticated(true)
                 setLoading(false)
                 setUser(res.data.user)
-                router.push('/')
+                // router.push('/')
             }
         } catch (error) {
             setIsSuccess(false);
@@ -142,7 +142,7 @@ export const AuthProvider = ({ children }) => {
                 formData,
                 {
                     headers: {
-                        "Content-Type": "application/json",
+                        'Content-Type': 'multipart/form-data',
                         Authorization: `Bearer ${access_token}`
                     }
                 }
@@ -196,16 +196,16 @@ export const AuthProvider = ({ children }) => {
                 error, 
                 isAuthenticated, 
                 updated,
+                uploaded,
                 setUpdate,
+                setUploaded,
                 login, 
                 register,
                 updateProfile,
                 logout,
+                uploadResume,
                 isSuccess,
                 clearErrors,
-                uploadResume,
-                uploaded,
-                setUploaded
             }}
         >
             {children}

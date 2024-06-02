@@ -6,17 +6,17 @@ import Image from "next/image";
 import Link from "next/link";
 
 const UploadResume = ({access_token}) => {
-    const [resume, setResume] = useState(null);
+    const [resume, setResumeFile] = useState(null);
     const router = useRouter();
   
     const { 
+        user,
         loading, 
         error, 
-        user,
-        clearErrors,
-        setUploaded, 
         uploaded,
-        uploadResume  
+        setUploaded, 
+        uploadResume,  
+        clearErrors,
     } = useContext(AuthContext);
   
     useEffect(() => {
@@ -27,28 +27,27 @@ const UploadResume = ({access_token}) => {
   
       if(uploaded) {
         setUploaded(false);
-        toast.success("Your resume is uploaded.")
+        toast.success("Your resume is uploaded successfully.")
       }
     }, [error, uploaded]);
   
+    const onChange = (e) => {
+        const resumeFile = e.target.files[0];
+        setResumeFile(resumeFile);
+    }
+
     const submitHandler = (e) => {
         e.preventDefault();
-        const formData = new FormData(); // form data for file
-        formData.append('resume', resume); // append file
-        console.log('submit', resume);
-        if(resume) {
-            uploadResume(formData, access_token);
+        if (resume) {
+          const formData = new FormData(); // form data for file
+          formData.append("resume", resume); // append file
+          console.log('Submitting formData:', formData.get('resume')); // Debugging statement
+          uploadResume(formData, access_token);
         } else {
-            toast.error("Please upload the resume!");
-            alert("Please upload the resume!");
+          toast.error("Please select a resume file to upload.");
         }
     };
 
-    const resumeChangeHandler = (e) => {
-        console.log('change ', e.target.files[0]);
-        setResume(e.target.files[0]);
-        console.log('state ', resume);
-    }
 
     return (
         <div className="modalMask">
@@ -73,7 +72,7 @@ const UploadResume = ({access_token}) => {
                         id="customFile"
                         accept="application/pdf"
                         required
-                        onChange={resumeChangeHandler}
+                        onChange={onChange}
                     />
                     </div>
                 </div>
