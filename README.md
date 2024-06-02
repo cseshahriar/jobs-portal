@@ -7,10 +7,15 @@ django and nextjs pet project
 # Features
 * Athentication System
 * Job Seeker
-* Employeer
+* Employer
 * User profile
 * Admin user management
 * Job Listing
+
+# Versions:
+* 1 - Python 3.10.12
+* 2 - Postgresql 14.12
+* 3 - Nodejs 18.17.1
 
 # Download & Setup Instructions for the backend
 * 1 - Clone project: git clone https://github.com/cseshahriar/jobs-portal.git
