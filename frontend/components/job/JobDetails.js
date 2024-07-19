@@ -7,8 +7,6 @@ import { toast } from "react-toastify";
 const JobDetails = ({job, candidates, access_token }) => {
   const { applyToJob, applied, clearErrors, loading, JobError } = useContext(JobContext);
 
-
-
   useEffect(() => {
     if(JobError) {
       toast.error(JobError);
@@ -19,7 +17,7 @@ const JobDetails = ({job, candidates, access_token }) => {
       toast.success("Your request submitted successfully.")
     }
 
-  }, []);
+  }, [JobError, applied]);
 
   const applyToJobHandler = () => {
     applyToJob(job.id, access_token);
@@ -44,20 +42,22 @@ const JobDetails = ({job, candidates, access_token }) => {
 
                 <div className="mt-3">
                   <span>
-                    { loading ? ("Loading...") : applied ? (
+                    { loading ? (
+                      "Loading..."
+                    ) : applied ? (
                       <button
                         disabled 
                         className="btn btn-success px-4 py-2 apply-btn" 
                       >
                         <i aria-hidden className="fas fa-check"></i>
-                         { loading ? 'Loading...' : 'Applied'}
+                         { loading ? "Loading..." : "Applied"}
                       </button>
                     ) : (
                         <button 
                           className="btn btn-primary px-4 py-2 apply-btn" 
                           onClick={applyToJobHandler}
                         >
-                          { loading ? "Loading..." : "  Apply Now"}
+                          { loading ? "Loading..." : "Apply Now"}
                         </button>
                     )}
                     <span className="ml-4 text-success">

@@ -25,16 +25,15 @@ export const JobProvider = ({ children }) => {
                     }
                 }
             )
-            if (res.data.applied === true) {
+            if (res.data.applied == true) {
                 setLoading(false);
                 setApplied(true);
             }
         } catch (error) {
-            console.log(error);
             setLoading(false)
             setApplied(false);
             setJobError(
-                error.response && error.response.data.message
+                error.response && error.response.data.error || error.response.data.message
             )
         }
     }
