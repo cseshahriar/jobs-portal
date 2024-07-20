@@ -9,6 +9,7 @@ export const JobProvider = ({ children }) => {
     const [JobError, setJobError] = useState(null);
     const [updated, setUpdated] = useState(null);
     const [applied, setApplied] = useState(false);
+    const [created, setCreated] = useState(false);
     const [stats, setStats] = useState(false);
     
     const router = useRouter()
@@ -33,6 +34,31 @@ export const JobProvider = ({ children }) => {
         } catch (error) {
             setLoading(false)
             setApplied(false);
+            setJobError(
+                error.response && error.response.data.error || error.response.data.message
+            )
+        }
+    }
+
+    // post a new job
+    const postNewJob = async (data, access_token) => {
+        try {
+            setLoading(true)
+            const res = await axios.post(
+                `${process.env.API_URL}/api/jobs/create/`, data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${access_token}`
+                    }
+                }
+            )
+            if (res.data) {
+                setLoading(false)
+                setCreated(true)
+            }
+        } catch (error) {
+            setLoading(false)
+            setCreated(false)
             setJobError(
                 error.response && error.response.data.error || error.response.data.message
             )
@@ -97,7 +123,10 @@ export const JobProvider = ({ children }) => {
                 clearErrors,
                 checkJobApply,
                 getTopicStats,
-                stats
+                stats,
+                postNewJob,
+                created,
+                setCreated
             }}
         >
             {children}

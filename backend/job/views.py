@@ -50,10 +50,16 @@ def job_detail(request, pk):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def job_create(request):
-    request.data['user'] = request.user  # user add to data from request
+    request.data['user'] = request.user.pk  # user add to data from request
     serializer = JobSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+    else:
+        return Response(
+            {'message': serializer.errors},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
     return Response(serializer.data)
 
 
