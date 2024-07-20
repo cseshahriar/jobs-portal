@@ -1,7 +1,8 @@
 export const jobTypeOptions = ["Permanent", "Temporary", "Internship"]
 export const educationOptions = ["Bachelors", "Masters", "PhD"]
 export const industryOptions = [
-    "Business", "IT", "Banking", "Education", "Telecommunication", "Others"
+    "Business", "Information Technology", "Banking", "Education", 
+    "Telecommunication", "Others"
 ]
 export const experienceOptions = [
     "No Experience",
