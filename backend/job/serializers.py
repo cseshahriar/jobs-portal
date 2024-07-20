@@ -12,3 +12,4 @@ class CandidateAppliedSerializer(serializers.ModelSerializer):
     class Meta:
         model = CandidateApplied
         fields = '__all__'
+        depth = 1

@@ -58,7 +58,7 @@ const TopicStats = () => {
                                 </div>
                             ) : stats && (
                                 <>
-                                    <h4>Stats of {topic}:</h4>
+                                    <h4>Stats of {topic.toUpperCase()}:</h4>
                                     <table className="table table-striped mt-4">
                                         <tbody>
                                             <tr>
