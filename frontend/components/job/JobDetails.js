@@ -22,7 +22,7 @@ const JobDetails = ({job, candidates, access_token }) => {
   const applyToJobHandler = () => {
     applyToJob(job.id, access_token);
   }
-
+  
   const d1 = moment(job.last_date);
   const d2 = moment(Date.now());
   const isLastDatePassed = d1.diff(d2, "days") < 0 ? true : false;
@@ -144,7 +144,7 @@ const JobDetails = ({job, candidates, access_token }) => {
               <h5>Job Posted:</h5>
               <p> 
                 { 
-                    moment.utc(job.created_At).local().startOf('second').fromNow()
+                    moment.utc(job.created_at).local().startOf('second').fromNow()
                 }
               </p>
 

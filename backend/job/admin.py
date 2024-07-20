@@ -6,7 +6,7 @@ from .models import Job, CandidateApplied
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
     list_display = (
-        'user', 'title', 'email', 'job_type', 'industry', 'experience',
+        'pk', 'user', 'title', 'email', 'job_type', 'industry', 'experience',
         'salary', 'created_at'
     )
     list_filter = ('job_type', 'industry', 'experience', )
