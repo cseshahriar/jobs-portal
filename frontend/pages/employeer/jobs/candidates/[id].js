@@ -41,7 +41,7 @@ export async function getServerSideProps({ req, params }) {
     }
   } catch (error) {
     return {
-      props: { error: error.response.data.message || error.response.data.detail}
+      props: { error: error.response.data.message || error.response.data.error}
     }
   }
 }

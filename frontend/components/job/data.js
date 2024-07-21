@@ -1,16 +1,13 @@
 export const jobTypeOptions = ["Permanent", "Temporary", "Internship"]
-export const educationOptions = ["Bachelors", "Masters", "PhD"]
+export const educationOptions = ["High School", "Bachelors", "Masters", "PhD"]
 export const industryOptions = [
-    "Business", "Information Technology", "Banking", "Education", 
-    "Telecommunication", "Others"
+    'Information Technology', 'Finance', 'Health Care', 'Education',
+    'Education', 'Manufacturing', 'Government', 'Retail', 'Business',
+    'Other'
 ]
 export const experienceOptions = [
     "No Experience",
-    "1 Years",
+    "1 Year",
     "2 Years",
-    "3 Years",
-    "4 Years",
-    "5 Years",
-    "6 Years",
-    "7 Years",
+    "3 Years above",
 ]

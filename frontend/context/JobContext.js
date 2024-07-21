@@ -8,6 +8,7 @@ export const JobProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [JobError, setJobError] = useState(null);
     const [updated, setUpdated] = useState(null);
+    const [deleted, setDeleted] = useState(null);
     const [applied, setApplied] = useState(false);
     const [created, setCreated] = useState(false);
     const [stats, setStats] = useState(false);
@@ -59,6 +60,54 @@ export const JobProvider = ({ children }) => {
         } catch (error) {
             setLoading(false)
             setCreated(false)
+            setJobError(
+                error.response && error.response.data.error || error.response.data.message
+            )
+        }
+    }
+
+     // update a job
+     const updateJob = async (id, data, access_token) => {
+        try {
+            setLoading(true)
+            const res = await axios.put(
+                `${process.env.API_URL}/api/jobs/${id}/update/`, data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${access_token}`
+                    }
+                }
+            )
+            if (res.data) {
+                setLoading(false)
+                setUpdated(true)
+            }
+        } catch (error) {
+            setLoading(false)
+            setUpdated(false)
+            setJobError(
+                error.response && error.response.data.error || error.response.data.message
+            )
+        }
+    }
+
+     // delete job
+     const deleteJob = async (id, access_token) => {
+        try {
+            setLoading(true)
+            const res = await axios.delete(
+                `${process.env.API_URL}/api/jobs/${id}/delete/`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${access_token}`
+                    }
+                }
+            )
+            setLoading(false);
+            setDeleted(true);
+        } catch (error) {
+            setLoading(false)
+            setDeleted(false);
             setJobError(
                 error.response && error.response.data.error || error.response.data.message
             )
@@ -117,6 +166,7 @@ export const JobProvider = ({ children }) => {
                 loading,
                 JobError,
                 updated,
+                setUpdated,
                 applied,
                 applyToJob,
                 setUpdated,
@@ -126,7 +176,11 @@ export const JobProvider = ({ children }) => {
                 stats,
                 postNewJob,
                 created,
-                setCreated
+                setCreated,
+                updateJob,
+                deleted,
+                setDeleted,
+                deleteJob
             }}
         >
             {children}
