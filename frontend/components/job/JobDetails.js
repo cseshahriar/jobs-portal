@@ -5,12 +5,7 @@ import JobContext from "../../context/JobContext";
 import { toast } from "react-toastify";
 
 const JobDetails = ({job, candidates, access_token }) => {
-<<<<<<< HEAD
-  const { applyToJob, applied, clearErrors, loading, JobError } = useContext(JobContext);
-
-=======
   const { applyToJob, checkJobApply, applied, clearErrors, loading, JobError } = useContext(JobContext);
->>>>>>> c6a7df022825f0356d7548bc10d5bc3be4a061ef
 
   useEffect(() => {
     if(JobError) {
@@ -21,13 +16,8 @@ const JobDetails = ({job, candidates, access_token }) => {
     if(applied) {
       toast.success("Your request submitted successfully.")
     }
-<<<<<<< HEAD
-
-  }, [JobError, applied, clearErrors]);
-=======
     checkJobApply(job.id, access_token);
   }, [JobError, applied]);
->>>>>>> c6a7df022825f0356d7548bc10d5bc3be4a061ef
 
   const applyToJobHandler = () => {
     applyToJob(job.id, access_token);
