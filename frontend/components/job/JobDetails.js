@@ -8,7 +8,6 @@ const JobDetails = ({job, candidates, access_token }) => {
   const { applyToJob, applied, clearErrors, loading, JobError } = useContext(JobContext);
 
 
-
   useEffect(() => {
     if(JobError) {
       toast.error(JobError);
@@ -19,7 +18,7 @@ const JobDetails = ({job, candidates, access_token }) => {
       toast.success("Your request submitted successfully.")
     }
 
-  }, []);
+  }, [JobError, applied, clearErrors]);
 
   const applyToJobHandler = () => {
     applyToJob(job.id, access_token);
@@ -46,15 +45,15 @@ const JobDetails = ({job, candidates, access_token }) => {
                   <span>
                     { loading ? ("Loading...") : applied ? (
                       <button
-                        disabled 
-                        className="btn btn-success px-4 py-2 apply-btn" 
+                        disabled
+                        className="btn btn-success px-4 py-2 apply-btn"
                       >
                         <i aria-hidden className="fas fa-check"></i>
                          { loading ? 'Loading...' : 'Applied'}
                       </button>
                     ) : (
-                        <button 
-                          className="btn btn-primary px-4 py-2 apply-btn" 
+                        <button
+                          className="btn btn-primary px-4 py-2 apply-btn"
                           onClick={applyToJobHandler}
                         >
                           { loading ? "Loading..." : "  Apply Now"}
@@ -137,8 +136,8 @@ const JobDetails = ({job, candidates, access_token }) => {
               <p>{ job.email }</p>
 
               <h5>Job Posted:</h5>
-              <p> 
-                { 
+              <p>
+                {
                     moment.utc(job.created_At).local().startOf('second').fromNow()
                 }
               </p>

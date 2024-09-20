@@ -1,0 +1,5 @@
+Frontend Issues Error: ENOENT: no such file or directory, open '/home/shosen/projects/jobs-portal/frontend/.next/BUILD_ID' solved:
+npm uninstall next
+npm install next
+npm run build
+npm run start

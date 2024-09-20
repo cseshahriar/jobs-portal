@@ -7,13 +7,13 @@ import Pagination from 'react-js-pagination'
 
 const Home = ({ data }) => {
   const router = useRouter()
-  
+
   const {jobs, count, resPerPage } = data;
-  
-  // pagination 
+
+  // pagination
   let { page=1, keyword } = router.query
   page = Number(page);
-  
+
   let queryParams;
   if(typeof window !== 'undefined') {
     queryParams = new URLSearchParams(window.location.search);
@@ -44,7 +44,7 @@ const Home = ({ data }) => {
               <h4 className="page-title">
                 {
                   keyword ? `${jobs.length} Results for ${keyword}` : "Latest Jobs"
-                } 
+                }
               </h4>
               <Link href="/stats">
                 <button className="btn btn-secondary float-right stats_btn">
@@ -57,11 +57,11 @@ const Home = ({ data }) => {
             </div>
 
             {jobs && jobs.map((job) => <JobItem key={job.id} job={job} />)}
-              
+
             {
               resPerPage < count && (
                 <div className="d-flex justify-content-center mt-5">
-                <Pagination 
+                <Pagination
                   activePage={page}
                   itemsCountPerPage={resPerPage}
                   totalItemsCount={count}

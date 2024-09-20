@@ -4,7 +4,7 @@ import JobDetails from '../../components/job/JobDetails'
 import NotFound from '../../components/layout/NotFound'
 
 export default function JobDetailsPage({ job, candidates, access_token, error }) {
-  if ( error?.includes("Not found")) return <NotFound />; 
+  if ( error?.includes("Not found")) return <NotFound />;
 
   return (
     <Layout>
@@ -21,8 +21,8 @@ export async function getServerSideProps({ req, params }) {
     const access_token = req.cookies.access || '';
     return {
       props: {
-        job, 
-        candidates, 
+        job,
+        candidates,
         access_token
       }
     }
