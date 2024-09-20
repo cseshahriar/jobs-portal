@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'storages',
     'django_filters',
     'django_extensions',
+    'drf_yasg',
 
     # local apps
     'job.apps.JobConfig',
@@ -163,7 +164,7 @@ GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 
 
-GRAPH_MODELS ={
+GRAPH_MODELS = {
     'all_applications': True,
     'graph_models': True,
 }

@@ -17,6 +17,12 @@ django and nextjs pet project
 * 2 - Postgresql 14.12
 * 3 - Nodejs 18.17.1
 
+# postgit
+* sudo apt-get install postgis postgresql-14-postgis-3
+- sudo -u postgres psql
+- \c your_database_name
+- CREATE EXTENSION postgis;
+
 # Download & Setup Instructions for the backend
 * 1 - Clone project: git clone https://github.com/cseshahriar/jobs-portal.git
 * 2 - cd jobs-portal && cd backend
