@@ -5,8 +5,12 @@ import JobContext from "../../context/JobContext";
 import { toast } from "react-toastify";
 
 const JobDetails = ({job, candidates, access_token }) => {
+<<<<<<< HEAD
   const { applyToJob, applied, clearErrors, loading, JobError } = useContext(JobContext);
 
+=======
+  const { applyToJob, checkJobApply, applied, clearErrors, loading, JobError } = useContext(JobContext);
+>>>>>>> c6a7df022825f0356d7548bc10d5bc3be4a061ef
 
   useEffect(() => {
     if(JobError) {
@@ -17,12 +21,21 @@ const JobDetails = ({job, candidates, access_token }) => {
     if(applied) {
       toast.success("Your request submitted successfully.")
     }
+<<<<<<< HEAD
 
   }, [JobError, applied, clearErrors]);
+=======
+    checkJobApply(job.id, access_token);
+  }, [JobError, applied]);
+>>>>>>> c6a7df022825f0356d7548bc10d5bc3be4a061ef
 
   const applyToJobHandler = () => {
     applyToJob(job.id, access_token);
   }
+
+  const d1 = moment(job.last_date);
+  const d2 = moment(Date.now());
+  const isLastDatePassed = d1.diff(d2, "days") < 0 ? true : false;
 
   return (
     <div className="job-details-wrapper">
@@ -43,24 +56,27 @@ const JobDetails = ({job, candidates, access_token }) => {
 
                 <div className="mt-3">
                   <span>
-                    { loading ? ("Loading...") : applied ? (
+                    { loading ? (
+                      "Loading..."
+                    ) : applied ? (
                       <button
                         disabled
                         className="btn btn-success px-4 py-2 apply-btn"
                       >
                         <i aria-hidden className="fas fa-check"></i>
-                         { loading ? 'Loading...' : 'Applied'}
+                         { loading ? "Loading..." : " Applied"}
                       </button>
                     ) : (
                         <button
                           className="btn btn-primary px-4 py-2 apply-btn"
                           onClick={applyToJobHandler}
+                          disabled={isLastDatePassed}
                         >
-                          { loading ? "Loading..." : "  Apply Now"}
+                          { loading ? "Loading..." : "Apply Now"}
                         </button>
                     )}
                     <span className="ml-4 text-success">
-                      <b>{candidates}</b> candidates has applied to this job.
+                      <b> {candidates}</b> candidates has applied to this job.
                     </span>
                   </span>
                 </div>
@@ -138,7 +154,7 @@ const JobDetails = ({job, candidates, access_token }) => {
               <h5>Job Posted:</h5>
               <p>
                 {
-                    moment.utc(job.created_At).local().startOf('second').fromNow()
+                    moment.utc(job.created_at).local().startOf('second').fromNow()
                 }
               </p>
 
@@ -146,14 +162,17 @@ const JobDetails = ({job, candidates, access_token }) => {
               <p>{ job.last_date.substring(0, 10) }</p>
             </div>
 
-            <div className="mt-5 p-0">
-              <div className="alert alert-danger">
-                <h5>Note:</h5>
-                You can no longer apply to this job. This job is expired. Last
-                date to apply for this job was: <b>{ job.last_date.substring(0, 10) }</b>
-                <br /> Checkout others job on Job Portal.
+            { isLastDatePassed && (
+              <div className="mt-5 p-0">
+                <div className="alert alert-danger">
+                  <h5>Note:</h5>
+                  You can no longer apply to this job. This job is expired. Last
+                  date to apply for this job was: <b>{ job.last_date.substring(0, 10) }</b>
+                  <br /> Checkout others job on Job Portal.
+                </div>
               </div>
-            </div>
+            )}
+
           </div>
         </div>
       </div>

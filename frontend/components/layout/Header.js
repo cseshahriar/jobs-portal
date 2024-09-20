@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
+//  https://nextjs.org/docs/messages/react-hydration-error
 import AuthContext from '../../context/AuthContext';
-
 
 const Header = () => {
   const {loading, user, logout} = useContext(AuthContext);
@@ -20,8 +19,10 @@ const Header = () => {
             <div className="logoImgWrapper">
               <Image width="30" height="30" src="/images/logo.png" alt="" />
             </div>
-            <span className="logo1">Job</span>
-            <span className="logo2">Portal</span>
+            <div>
+              <span className="logo1">Job</span>
+              <span className="logo2">Portal</span>
+            </div>
           </div>
         </Link>
         <div className="btnsWrapper">
@@ -43,18 +44,10 @@ const Header = () => {
                 <span>Hi, {  user.first_name ? user.first_name :  user.email }</span> {" "}
               </a>
               <div className="dropdown-menu" arial-labelledby="dropDownMenuButton">
-                <Link href="/me" className="dropdown-item">
-                    Profile
-                </Link>
-                <Link href="/employer/jobs" className="dropdown-item">
-                    My Jobs
-                </Link>
-                <Link href="/me/applied" className="dropdown-item">
-                    Jobs applied
-                </Link>
-                <Link href="/upload/resume" className="dropdown-item">
-                    Upload Resume
-                </Link>
+                <Link href="/me" className="dropdown-item"> Profile</Link>
+                <Link href="/employeer/jobs" className="dropdown-item"> My Jobs</Link>
+                <Link href="/me/applied" className="dropdown-item"> Jobs applied</Link>
+                <Link href="/upload/resume" className="dropdown-item"> Upload Resume</Link>
                 <Link href="" className="dropdown-item text-danger" onClick={logoutHandler}>
                     Logout
                 </Link>

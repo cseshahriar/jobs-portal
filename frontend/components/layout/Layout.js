@@ -6,6 +6,7 @@ import Footer from './Footer'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Link from 'next/link'
 
 const Layout = ({ children, title = 'Find you job now'}) => {
   return (
