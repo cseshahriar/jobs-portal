@@ -8,9 +8,11 @@ from django.contrib.auth.models import User
 
 
 class JobType(models.TextChoices):
-    Permanent = 'Permanent'
-    Temporary = 'Temporary'
+    Permanent = 'Full Time'
+    Temporary = 'Part Time'
     Internship = 'Internship'
+    Freelance = 'Freelance'
+    Contract = 'Contract'
 
 
 class Education(models.TextChoices):

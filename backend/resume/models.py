@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 
 from account.models import User
 from address.models import (Country, District, Thana, PostOffice)
+from job.models import JobType, Industry
 
 
 class AbstractBase(models.Model):
@@ -166,9 +167,50 @@ class Address(models.Model):
     is_present = models.BooleanField(default=False)
     is_permanent = models.BooleanField(default=False)
 
-# Carrer and Application information
-# preferred Areas
-# Others relevent information
+
+class CarrerInformation(models.Model):
+    JOB_LEVELS = [
+        ('Entry Level', 'Entry Level'),
+        ('Mid Level', 'Mid Level'),
+        ('Top Level', 'Top Level'),
+    ]
+    cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
+    objective = models.TextField(blank=False)
+    present_salary = models.CharField(max_length=30, help_text="TK/Month")
+    expected_salary = models.CharField(max_length=30, help_text="TK/Month")
+    job_level = models.CharField(max_length=50, choices=JOB_LEVELS)
+    job_type = models.CharField(
+        max_length=50, choices=JobType.choices, default=JobType.Permanent
+    )
+
+
+class Skill(models.Model):
+    """config models """
+    name = models.CharField(max_length=255)
+    functional_skill = models.BooleanField(default=False)
+    special_skill = models.BooleanField(default=False)
+
+
+class PreferredArea:
+    cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
+    preferred_job_location = models.ForeignKey(
+        District, on_delete=models.SET_NULL, related_name='prerered_areas'
+    )
+    industry_type = models.CharField(
+        max_length=50, choices=Industry.choices, default=Industry.Business
+    )
+    functional_skill = models.ManyToManyField(Skill, blank=True)
+    special_skill = models.ManyToManyField(Skill, blank=False)
+
+
+class releventInformation(models.Model):
+    cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
+    carrer_summery = models.TextField(blank=False)
+    special_qualification = models.TextField(blank=False)
+    special_qualification = models.TextField(blank=False)
+    keywords = models.TextField(
+        blank=False, help_text="Comma seperated Python, Django"
+    )
 
 
 # Education/Training
@@ -247,5 +289,3 @@ class Referee(models.Model):
 
     def __str__(self):
         return self.name
-
-
