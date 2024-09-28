@@ -2,9 +2,11 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
-from account.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+
+from account.models import User
+from address.models import (Country, District, Thana, PostOffice)
 
 
 class AbstractBase(models.Model):
@@ -146,7 +148,24 @@ class Profile(models.Model):
         super().delete(*args, **kwargs)
 
 
-# Address Details
+class Address(models.Model):
+    """ Address Model"""
+    cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
+    country = models.ForeignKey(
+        Country, on_delete=models.SET_NULL, null=True, blank=True)
+    district = models.ForeignKey(
+        District, on_delete=models.SET_NULL, null=True, blank=True)
+    thana = models.ForeignKey(
+        Thana, on_delete=models.SET_NULL, null=True, blank=True)
+    post_office = models.ForeignKey(
+        PostOffice, on_delete=models.SET_NULL, null=True, blank=True)
+    village = models.TextField(
+        blank=False, help_text="Type your House No/Road/Village"
+    )
+    inside_bangladesh = models.BooleanField(default=False)
+    is_present = models.BooleanField(default=False)
+    is_permanent = models.BooleanField(default=False)
+
 # Carrer and Application information
 # preferred Areas
 # Others relevent information
