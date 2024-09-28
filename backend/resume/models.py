@@ -184,7 +184,7 @@ class CarrerInformation(models.Model):
     )
 
 
-class Skill(models.Model):
+class SkillConfig(models.Model):  # duplicated
     """config models """
     name = models.CharField(max_length=255)
     functional_skill = models.BooleanField(default=False)
@@ -199,8 +199,8 @@ class PreferredArea:
     industry_type = models.CharField(
         max_length=50, choices=Industry.choices, default=Industry.Business
     )
-    functional_skill = models.ManyToManyField(Skill, blank=True)
-    special_skill = models.ManyToManyField(Skill, blank=False)
+    functional_skill = models.ManyToManyField(SkillConfig, blank=True)
+    special_skill = models.ManyToManyField(SkillConfig, blank=False)
 
 
 class releventInformation(models.Model):
@@ -215,9 +215,83 @@ class releventInformation(models.Model):
 
 # Education/Training
 # ------------------
-# academic summary
-# trainning summary
-# professional certificate summary
+class EducationDegree(models.Model):
+    name = models.CharField(max_length=255, unique=True, db_index=True)
+
+
+class EducationLevel(models.Model):
+    name = models.CharField(max_length=255, unique=True, db_index=True)
+
+
+class EducationResult(models.Model):
+    result = models.CharField(max_length=255, unique=True, db_index=True)
+    # RESULT_CHOICES = [
+    #     ("First Division", "First Division"),
+    #     ("Second  Division/Class", "Second  Division/Class"),
+    #     (3, "Third Division/Class"),
+    #     (4, "Grade"),
+    #     (5, "Appeared"),
+    #     (6, "Enrolled"),
+    #     (7, "Awarded"),
+    #     (8, "Do not mention"),
+    #     (9, "Pass"),
+    # ]
+
+
+class Academic(models.Model):
+    cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
+    education_level = models.ForeignKey(
+        EducationLevel, on_delete=models.SET_NULL, null=True)
+    education_degree = models.ForeignKey(
+        EducationDegree, on_delete=models.SET_NULL, null=True)
+    major = models.CharField(
+        max_length=255, help_text="Concentration/Major/Group",
+        null=True, blank=False
+    )
+    institute_name = models.CharField(
+        max_length=255, verbose_name="Institute Name", null=True, blank=False
+    )
+    year = models.CharField(
+        max_length=50, help_text="Expected Year of Passing",
+        null=True, blank=False
+    )
+    result = models.ForeignKey(
+        EducationResult, on_delete=models.SET_NULL, null=True, blank=False
+    )
+    duration = models.CharField(
+        max_length=4, help_text="Duration(Years) i.e 2024",
+        null=True, blank=False
+    )
+    achievement = models.CharField(max_length=255, null=True, blank=True)
+    is_visible = models.BooleanField(
+        default=True,
+        help_text="Show this degree in summary view at employer's end"
+    )
+
+    def __str__(self):
+        return f"{self.institution} - {self.year} - {self.award}"
+
+
+class Training(models.Model):
+    cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
+    training_title = models.CharField(max_length=255)
+    country = models.ForeignKey(
+        Country, on_delete=models.SET_NULL, null=True, blank=False)
+    topic_covered = models.CharField(max_length=255)
+    training_year = models.CharField(max_length=4)
+    institute = models.CharField(max_length=255)
+    duration = models.CharField(max_length=255, help_text="85 Hours")
+    location = models.TextField(blank=False)
+    certificate_link = models.URLField(null=True, blank=True)
+
+
+class ProfessionalCertificate(models.Model):
+    cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
+    certification = models.CharField(max_length=255)
+    institute = models.CharField(max_length=255)
+    duration_start = models.DateField()
+    duration_end = models.DateField()
+    location = models.TextField(blank=False)
 
 # Employment
 # -----------
@@ -267,16 +341,6 @@ class Experince(models.Model):
 
     def __str__(self):
         return f"{self.office} - {self.position} - {self.duration}"
-
-
-class Academic(models.Model):
-    cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
-    institution = models.CharField(max_length=500)
-    year = models.CharField(max_length=500)
-    award = models.CharField(max_length=500)
-
-    def __str__(self):
-        return f"{self.institution} - {self.year} - {self.award}"
 
 
 class Referee(models.Model):
