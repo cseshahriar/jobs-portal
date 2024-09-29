@@ -326,8 +326,8 @@ class ExpertiseArea(models.Model):
 # publications
 # Award/honors
 # Projects
-# Others
 
+# ======================  Others ==============================================
 class Skill(models.Model):
     BEGINNER = 'Beginner'
     INTERMEDIATE = 'Intermediate'
@@ -337,9 +337,45 @@ class Skill(models.Model):
         (INTERMEDIATE, 'Intermediate'),
         (ADVANCED, 'Advanced'),
     ]
+    HOW_LEARN = [
+        ("Self", "Self"),
+        ("Job", "Job"),
+        ("Education", "Education"),
+        ("Professional Training", "Professional Training"),
+    ]
     cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     level = models.CharField(
+        max_length=50, choices=LEVEL_CHOICES
+    )
+    how_learn = models.CharField(
+        max_length=255, choices=HOW_LEARN,
+        help_text="How did you learn the skill?",
+        null=True, blank=False
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class LanguageProficiency(models.Model):
+    high = 'High'
+    medium = 'Medium'
+    low = 'Low'
+    LEVEL_CHOICES = [
+        (high, 'Hight'),
+        (medium, 'Medium'),
+        (low, 'Low'),
+    ]
+    cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
+    language = models.CharField(max_length=255)
+    reading = models.CharField(
+        max_length=50, choices=LEVEL_CHOICES
+    )
+    writing = models.CharField(
+        max_length=50, choices=LEVEL_CHOICES
+    )
+    speaking = models.CharField(
         max_length=50, choices=LEVEL_CHOICES
     )
 
