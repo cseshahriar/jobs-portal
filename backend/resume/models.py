@@ -213,8 +213,7 @@ class releventInformation(models.Model):
     )
 
 
-# Education/Training
-# ------------------
+# ===================== Education/Training ====================================
 class EducationDegree(models.Model):
     name = models.CharField(max_length=255, unique=True, db_index=True)
 
@@ -293,10 +292,25 @@ class ProfessionalCertificate(models.Model):
     duration_end = models.DateField()
     location = models.TextField(blank=False)
 
-# Employment
-# -----------
-# employment history
-# employment history(for retired armay person)
+
+# ==================== employment =============================================
+class Employment(models.Model):
+    cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
+    company_name = models.CharField(max_length=255)
+    company_business = models.CharField(max_length=255)
+    designation = models.CharField(max_length=255)
+    department = models.CharField(max_length=255)
+    employment_period_start = models.DateField()
+    employment_period_end = models.DateField(null=True, blank=True)
+    currently_working = models.BooleanField(default=False)
+    responsibilities = models.TextField()
+    company_location = models.TextField()
+
+
+class ExpertiseArea(models.Model):
+    employment = models.ForeignKey(Employment, on_delete=models.CASCADE)
+    skill = models.CharField(max_length=255, null=True, blank=True)
+    duration = models.CharField(max_length=255, help_text="duration(Month)")
 
 
 # others
