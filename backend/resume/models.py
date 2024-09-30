@@ -191,16 +191,19 @@ class SkillConfig(models.Model):  # duplicated
     special_skill = models.BooleanField(default=False)
 
 
-class PreferredArea:
+class PreferredArea(models.Model):
     cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
     preferred_job_location = models.ForeignKey(
-        District, on_delete=models.SET_NULL, related_name='prerered_areas'
+        District, on_delete=models.SET_NULL, related_name='prerered_areas',
+        null=True
     )
     industry_type = models.CharField(
         max_length=50, choices=Industry.choices, default=Industry.Business
     )
-    functional_skill = models.ManyToManyField(SkillConfig, blank=True)
-    special_skill = models.ManyToManyField(SkillConfig, blank=False)
+    functional_skill = models.ManyToManyField(
+        SkillConfig, blank=True, related_name='functional_prefered_areas')
+    special_skill = models.ManyToManyField(
+        SkillConfig, blank=False, related_name='special_prefered_areas')
 
 
 class releventInformation(models.Model):
@@ -308,6 +311,8 @@ class Employment(models.Model):  # Experince
 
 
 class ExpertiseArea(models.Model):
+    cv = models.ForeignKey(
+        CurriculumVitae, on_delete=models.CASCADE, null=True)
     employment = models.ForeignKey(Employment, on_delete=models.CASCADE)
     skill = models.CharField(max_length=255, null=True, blank=True)
     duration = models.CharField(max_length=255, help_text="duration(Month)")
@@ -370,6 +375,8 @@ class LanguageProficiency(models.Model):
 
 
 class LinkAccount(models.Model):
+    cv = models.ForeignKey(
+        CurriculumVitae, on_delete=models.CASCADE, null=True)
     ACCOUNT_TYPES = [
         ('LinkedIn', 'LinkedIn'),
         ('Facebook', 'Facebook'),
@@ -412,12 +419,16 @@ class Referee(models.Model):
 # accomplishment
 # --------------
 class Portfolio(models.Model):
+    cv = models.ForeignKey(
+        CurriculumVitae, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255)
     url = models.URLField(max_length=100)
     description = models.TextField(blank=True, max_length=300)
 
 
 class Publication(models.Model):
+    cv = models.ForeignKey(
+        CurriculumVitae, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255)
     issue_on = models.DateField()
     url = models.URLField(max_length=100)
@@ -425,6 +436,8 @@ class Publication(models.Model):
 
 
 class Award(models.Model):
+    cv = models.ForeignKey(
+        CurriculumVitae, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255)
     issue_on = models.DateField()
     url = models.URLField(max_length=100)
@@ -432,6 +445,8 @@ class Award(models.Model):
 
 
 class Project(models.Model):
+    cv = models.ForeignKey(
+        CurriculumVitae, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255)
     issue_on = models.DateField()
     url = models.URLField(max_length=100)
@@ -439,6 +454,8 @@ class Project(models.Model):
 
 
 class Other(models.Model):
+    cv = models.ForeignKey(
+        CurriculumVitae, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255)
     issue_on = models.DateField()
     url = models.URLField(max_length=100)
