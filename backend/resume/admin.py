@@ -1,7 +1,7 @@
 # Register your models here.
 from django.contrib import admin
 from .models import (
-    CurriculumVitae, Skill, Experince, Academic, Referee, Profile
+    CurriculumVitae, Skill, Academic, Referee, Profile
 )
 
 
@@ -9,12 +9,6 @@ from .models import (
 class SkillInline(admin.TabularInline):
     model = Skill
     extra = 1  # Number of extra empty forms to show
-
-
-# Inline for Experience
-class ExperienceInline(admin.TabularInline):
-    model = Experince
-    extra = 1
 
 
 # Inline for Academic
@@ -41,7 +35,6 @@ class ProfileInline(admin.StackedInline):
 class CurriculumVitaeAdmin(admin.ModelAdmin):
     inlines = [
         SkillInline,
-        ExperienceInline,
         AcademicInline,
         RefereeInline,
         ProfileInline

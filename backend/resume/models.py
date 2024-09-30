@@ -294,7 +294,7 @@ class ProfessionalCertificate(models.Model):
 
 
 # ==================== employment =============================================
-class Employment(models.Model):
+class Employment(models.Model):  # Experince
     cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
     company_name = models.CharField(max_length=255)
     company_business = models.CharField(max_length=255)
@@ -312,20 +312,6 @@ class ExpertiseArea(models.Model):
     skill = models.CharField(max_length=255, null=True, blank=True)
     duration = models.CharField(max_length=255, help_text="duration(Month)")
 
-
-# others
-# ---------------
-# skills
-# language proficiency
-# link Account
-# references
-
-# accomplishment
-# --------------
-# portfolio
-# publications
-# Award/honors
-# Projects
 
 # ======================  Others ==============================================
 class Skill(models.Model):
@@ -383,23 +369,77 @@ class LanguageProficiency(models.Model):
         return self.name
 
 
-class Experince(models.Model):
-    cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
-    office = models.CharField(max_length=255)
-    position = models.CharField(max_length=255)
-    duration = models.CharField(max_length=255)
-
-    def __str__(self):
-        return f"{self.office} - {self.position} - {self.duration}"
+class LinkAccount(models.Model):
+    ACCOUNT_TYPES = [
+        ('LinkedIn', 'LinkedIn'),
+        ('Facebook', 'Facebook'),
+        ('GitHub', 'GitHub'),
+        ('YouTube', 'YouTube'),
+        ('Dribbble', 'Dribbble'),
+        ('Codeforces', 'Codeforces'),
+        ('Hackerrank', 'Hackerrank'),
+        ('Leetcode', 'Leetcode'),
+        ('Others', 'Dribbble'),
+    ]
+    choose_account = models.CharField(max_length=100, choices=ACCOUNT_TYPES)
+    link = models.URLField()
 
 
 class Referee(models.Model):
+    RELATION_TYPES = [
+        ('Relative', 'Relative'),
+        ('Family Friend', 'Family Friend'),
+        ('Academic', 'Academic'),
+        ('Professional', 'Professional'),
+        ('Others', 'Others'),
+    ]
     cv = models.ForeignKey(CurriculumVitae, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+    designation = models.CharField(max_length=255, null=True)
+    organization = models.CharField(max_length=255, null=True)
     email = models.CharField(max_length=255)
-    phone = models.CharField(max_length=255)
-    institution = models.CharField(max_length=255)
-    position = models.CharField(max_length=255)
+    relation = models.CharField(
+        max_length=255, choices=RELATION_TYPES, null=True)
+    phone = models.CharField(max_length=255, null=True)
+    phone_personal = models.CharField(max_length=16, null=True)
+    phone_office = models.CharField(max_length=16, null=True)
+    address = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+
+# accomplishment
+# --------------
+class Portfolio(models.Model):
+    title = models.CharField(max_length=255)
+    url = models.URLField(max_length=100)
+    description = models.TextField(blank=True, max_length=300)
+
+
+class Publication(models.Model):
+    title = models.CharField(max_length=255)
+    issue_on = models.DateField()
+    url = models.URLField(max_length=100)
+    description = models.TextField(blank=True, max_length=300)
+
+
+class Award(models.Model):
+    title = models.CharField(max_length=255)
+    issue_on = models.DateField()
+    url = models.URLField(max_length=100)
+    description = models.TextField(blank=True, max_length=300)
+
+
+class Project(models.Model):
+    title = models.CharField(max_length=255)
+    issue_on = models.DateField()
+    url = models.URLField(max_length=100)
+    description = models.TextField(blank=True, max_length=300)
+
+
+class Other(models.Model):
+    title = models.CharField(max_length=255)
+    issue_on = models.DateField()
+    url = models.URLField(max_length=100)
+    description = models.TextField(blank=True, max_length=300)
